@@ -4,7 +4,7 @@ const {handleGenerateNewShortId,handleShortID,handleGetAnalytics} = require('../
 
 router.post("/url",handleGenerateNewShortId);
 
-router.get("/:shortId",handleShortID);
+router.get("/url/:shortId",handleShortID);
 
 router.get('/analytics/:shortId',handleGetAnalytics);
 

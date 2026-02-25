@@ -19,7 +19,9 @@ async function handleGenerateNewShortId(req, res) {
             visitHistory: [],
         });
 
-        return res.status(201).json({ id: shortID });
+        return res.render('home',{
+            id: shortID
+        });       
 
     } catch (error) {
         return res.status(500).json({
@@ -38,8 +40,9 @@ async function handleShortID(req,res){
             timestamp : Date.now()
         },
     }});
-
     res.redirect(Entry.redirectURL);
+
+    
 }
 
 async function handleGetAnalytics(req,res){

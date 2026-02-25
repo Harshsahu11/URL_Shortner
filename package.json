@@ -20,6 +20,7 @@
   "homepage": "https://github.com/Harshsahu11/URL_Shortner#readme",
   "dependencies": {
     "dotenv": "^17.3.1",
+    "ejs": "^4.0.1",
     "express": "^5.2.1",
     "mongoose": "^9.2.2",
     "nanoid": "^5.1.6",
