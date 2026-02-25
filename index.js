@@ -9,8 +9,13 @@ const app = express();
 const PORT = 8001;
 ConnectDB();
 
-app.use("/",urlRoute);
+app.use(express.json());
+app.use(express.urlencoded({extended:true}));
 
+app.use("/",urlRoute);
+app.get("./:shortId",(req,res)=>{
+
+})
 
 app.listen(PORT,()=>{
     console.log(`Server is running on Port: ${PORT}`);

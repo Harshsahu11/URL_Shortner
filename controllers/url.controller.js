@@ -1,23 +1,47 @@
-const {nanoid} = require('nanoid');
+const { nanoid } = require('nanoid');
 const URL = require("../models/url.model");
 
-async function handleGenerateNewShortId(req,res){
+async function handleGenerateNewShortId(req, res) {
     const body = req.body;
-    if(!body.url) {
+
+    if (!body.url) {
         return res.status(400).json({
-            message:"URL is required"
-        })
+            message: "URL is required"
+        });
     }
-    const shortID = nanoid(8);
-    await URL.create({
-        shortId : shortID,
-        redirectURL : body.url,
-        visitHistory:[],
-    });
 
-    return res.json({id:shortID});
+    try {
+        const shortID = nanoid(8);
+
+        await URL.create({
+            shortId: shortID,
+            redirectURL: body.url,
+            visitHistory: [],
+        });
+
+        return res.status(201).json({ id: shortID });
+
+    } catch (error) {
+        return res.status(500).json({
+            message: "Internal Server Error",
+            error: error.message
+        });
+    }
 }
 
+async function handleShortID(req,res){
+    const shortId = req.params.shortId;
+    const Entry = await URL.findOneAndUpdate({
+        shortId
+    },{$push:{
+        visitHistory:{
+            timestamp : Date.now()
+        },
+    }});
+
+    res.redirect(Entry.redirectURL);
+}
 module.exports = {
-    handleGenerateNewShortId
-}
+    handleGenerateNewShortId,
+    handleShortID
+};
