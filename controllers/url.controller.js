@@ -41,7 +41,17 @@ async function handleShortID(req,res){
 
     res.redirect(Entry.redirectURL);
 }
+
+async function handleGetAnalytics(req,res){
+    const shortId = req.params.shortId;
+    const result = await URL.findOne({shortId});
+    return res.json({ totalClicks:result.visitHistory.length,
+        analytics : result.visitHistory
+    });
+}
+
 module.exports = {
     handleGenerateNewShortId,
-    handleShortID
+    handleShortID,
+    handleGetAnalytics
 };
