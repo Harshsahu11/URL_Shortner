@@ -28,9 +28,12 @@ async function handleUserLogin(req,res){
         });
     }
 
-    const sessionId = uuidv4();
-    setUser(sessionId, user);
-    res.cookie('uid',sessionId);
+    // const sessionId = uuidv4(); --------StateFul
+    // setUser(sessionId, user);
+    // res.cookie('uid',sessionId);
+
+    const token = setUser(user);
+    res.cookie("uid",token);
     return res.redirect('/');
 }
 
