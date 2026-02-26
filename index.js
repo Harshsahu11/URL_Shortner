@@ -2,9 +2,12 @@ require('dotenv').config();
 const express = require("express");
 const {ConnectDB} = require("./db/db");
 const path = require('path');
-const staticRoute = require('./routes/staticRouter');
+const cookieParser = require('cookie-parser');
+const {restrictToLoggedin} = require('./middlewares/auth.middleware');
 
+const staticRoute = require('./routes/staticRouter');
 const urlRoute = require('./routes/url.router');
+const userRoute = require('./routes/user.router');
 
 
 const app = express();
@@ -16,8 +19,10 @@ app.set('views',path.resolve("./views"));
 
 app.use(express.json());
 app.use(express.urlencoded({extended:false}));
+app.use(cookieParser());
 
-app.use("/",urlRoute);
+app.use("/url",restrictToLoggedin,urlRoute);
+app.use("/user",userRoute);
 app.use("/",staticRoute);
 
 

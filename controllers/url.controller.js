@@ -40,6 +40,7 @@ async function handleShortID(req,res){
             timestamp : Date.now()
         },
     }});
+    
     res.redirect(Entry.redirectURL);
 
     
