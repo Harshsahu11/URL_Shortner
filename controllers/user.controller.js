@@ -12,7 +12,7 @@ async function handleUSerSignup(req,res){
     await User.create({
         name,
         email,
-        password
+        password,
     });
 
     return res.redirect('/');

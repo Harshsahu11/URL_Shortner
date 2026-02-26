@@ -3,7 +3,8 @@ const express = require("express");
 const {ConnectDB} = require("./db/db");
 const path = require('path');
 const cookieParser = require('cookie-parser');
-const {restrictToLoggedin} = require('./middlewares/auth.middleware');
+const {restrictToLoggedin,checkAuth} = require('./middlewares/auth.middleware');
+const { handleShortID } = require("./controllers/url.controller");
 
 const staticRoute = require('./routes/staticRouter');
 const urlRoute = require('./routes/url.router');
@@ -23,7 +24,8 @@ app.use(cookieParser());
 
 app.use("/url",restrictToLoggedin,urlRoute);
 app.use("/user",userRoute);
-app.use("/",staticRoute);
+app.use("/",checkAuth,staticRoute);
+app.get("/:shortId",handleShortID);
 
 
 

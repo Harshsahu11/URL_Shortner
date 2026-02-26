@@ -15,6 +15,17 @@ async function restrictToLoggedin(req,res,next){
     next();
 }
 
+
+async function checkAuth(req,res,next){
+    const useruid = req.cookies?.uid;
+
+    const user = getUser(useruid);
+
+    req.user = user;
+    next();
+
+}
 module.exports = {
-    restrictToLoggedin
+    restrictToLoggedin,
+    checkAuth
 }
